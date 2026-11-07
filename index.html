@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kai Adeyemi | Video Editor</title>
+<meta name="description" content="Video editor for creators and brands. Short-form, YouTube, and commercial edits.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07080a; --panel:#101216; --line:#23262d; --text:#ece8e1; --mute:#8f9299;
+  --accent:#e9a23b; --accent-ink:#1a1204;
+  --display:'Big Shoulders Display','Arial Narrow',Impact,sans-serif;
+  --body:'DM Sans',system-ui,-apple-system,Segoe UI,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font:400 17px/1.6 var(--body);-webkit-font-smoothing:antialiased}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;opacity:.07;z-index:50;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:var(--display);font-weight:900;line-height:.92;letter-spacing:.005em}
+h2{font-size:clamp(40px,6vw,72px);margin-bottom:40px}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:18px 24px;background:linear-gradient(var(--bg),transparent)}
+nav .logo{font:900 24px var(--display);text-decoration:none}
+nav .links{display:flex;gap:26px;font-size:15px}
+nav .links a{text-decoration:none;color:var(--mute);transition:color .2s}
+nav .links a:hover{color:var(--text)}
+@media(max-width:640px){nav .links a:not(:last-child){display:none}}
+
+/* hero */
+.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding:120px 0 64px;position:relative;overflow:hidden;
+  background:radial-gradient(ellipse 70% 60% at 75% 30%,rgba(233,162,59,.16),transparent 65%),var(--bg)}
+.hero::before,.hero::after{content:"";position:absolute;left:0;right:0;height:7vh;background:#000;z-index:1}
+.hero::before{top:0}.hero::after{bottom:0}
+.hero .wrap{position:relative;z-index:2;width:100%}
+.tc{font:700 15px/1 var(--body);font-variant-numeric:tabular-nums;color:var(--accent);margin-bottom:22px;display:flex;align-items:center;gap:10px}
+.tc i{width:9px;height:9px;border-radius:50%;background:#e5484d;animation:rec 1.2s steps(2) infinite}
+@keyframes rec{50%{opacity:.15}}
+.hero h1{font-size:clamp(76px,17vw,230px);max-width:11ch}
+.hero p{max-width:46ch;color:var(--mute);margin:26px 0 34px;font-size:19px}
+.btns{display:flex;gap:14px;flex-wrap:wrap}
+.btn{display:inline-block;padding:15px 28px;border-radius:2px;font-weight:700;text-decoration:none;border:1px solid var(--line);cursor:pointer;background:none;color:var(--text);font-family:var(--body);font-size:16px;transition:background .2s,border-color .2s}
+.btn:hover{border-color:var(--text)}
+.btn.main{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.main:hover{background:#f5b655}
+
+section{padding:110px 0}
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin:-8px 0 32px}
+.filters button{background:none;border:1px solid var(--line);color:var(--mute);padding:8px 18px;border-radius:999px;font:500 15px var(--body);cursor:pointer;transition:.2s}
+.filters button.on,.filters button:hover{color:var(--accent-ink);background:var(--accent);border-color:var(--accent)}
+
+/* work grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:26px}
+.card{background:none;border:0;text-align:left;color:inherit;cursor:pointer;font:inherit}
+.thumb{position:relative;aspect-ratio:16/9;overflow:hidden;background:linear-gradient(135deg,#1a1d24,#0d0f13);border:1px solid var(--line)}
+.thumb img,.thumb video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s,opacity .3s}
+.thumb video{opacity:0}
+.card:hover .thumb img,.card:focus-visible .thumb img{transform:scale(1.05)}
+.card:hover .thumb video{opacity:1}
+.thumb .play{position:absolute;left:14px;bottom:14px;width:46px;height:46px;border-radius:50%;background:var(--accent);display:grid;place-items:center;transition:transform .25s}
+.thumb .play::after{content:"";border-left:14px solid var(--accent-ink);border-top:8px solid transparent;border-bottom:8px solid transparent;margin-left:4px}
+.card:hover .play{transform:scale(1.15)}
+.card h3{font-size:30px;margin:14px 0 4px}
+.card span{color:var(--mute);font-size:15px}
+
+/* services */
+.plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:0;border:1px solid var(--line)}
+.plan{padding:34px 30px;border-right:1px solid var(--line);background:var(--panel)}
+.plan:last-child{border-right:0}
+.plan.hot{background:#17130b;box-shadow:inset 0 3px 0 var(--accent)}
+.plan h3{font-size:34px;margin-bottom:6px}
+.plan .price{font:900 46px var(--display);color:var(--accent);margin:8px 0 14px}
+.plan ul{list-style:none;color:var(--mute);font-size:16px}
+.plan li{padding:7px 0;border-top:1px solid var(--line)}
+@media(max-width:700px){.plan{border-right:0;border-bottom:1px solid var(--line)}}
+
+.about{display:grid;grid-template-columns:1.2fr 1fr;gap:60px;align-items:start}
+.about p{color:var(--mute);margin-bottom:18px;max-width:58ch}
+.stats{display:grid;gap:0;border-top:1px solid var(--line)}
+.stats div{display:flex;justify-content:space-between;align-items:baseline;padding:18px 0;border-bottom:1px solid var(--line)}
+.stats b{font:900 44px var(--display);color:var(--accent)}
+.stats span{color:var(--mute)}
+@media(max-width:800px){.about{grid-template-columns:1fr;gap:34px}}
+
+.contact{text-align:center;background:radial-gradient(ellipse 60% 80% at 50% 100%,rgba(233,162,59,.14),transparent),var(--bg)}
+.contact h2{font-size:clamp(52px,11vw,150px);margin-bottom:22px}
+.contact p{color:var(--mute);margin-bottom:32px}
+.contact .btns{justify-content:center}
+footer{padding:30px 24px;text-align:center;color:var(--mute);font-size:14px;border-top:1px solid var(--line)}
+
+/* lightbox */
+.lb{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.93);display:none;place-items:center;padding:24px}
+.lb.open{display:grid;animation:lb .25s ease-out}
+@keyframes lb{from{opacity:0}}
+.lb .frame{width:min(1100px,100%);aspect-ratio:16/9;background:#000}
+.lb iframe{width:100%;height:100%;border:0}
+.lb .x{position:absolute;top:16px;right:20px;background:none;border:0;color:var(--text);font-size:38px;cursor:pointer;line-height:1}
+.lb .cap{position:absolute;bottom:22px;left:0;right:0;text-align:center;color:var(--mute)}
+
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="#top" id="navName"></a>
+  <div class="links"><a href="#work">Work</a><a href="#services">Pricing</a><a href="#about">About</a><a href="#contact">Hire me</a></div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="tc"><i></i><span id="tc">00:00:00:00</span></div>
+    <h1 id="heroTitle"></h1>
+    <p id="heroSub"></p>
+    <div class="btns">
+      <button class="btn main" id="reelBtn">Watch the showreel</button>
+      <a class="btn" href="#contact">Book an edit</a>
+    </div>
+  </div>
+</header>
+
+<section id="work">
+  <div class="wrap">
+    <h2>Selected work</h2>
+    <div class="filters" id="filters"></div>
+    <div class="grid" id="grid"></div>
+  </div>
+</section>
+
+<section id="services" style="background:#0a0b0e">
+  <div class="wrap">
+    <h2>Pricing</h2>
+    <div class="plans" id="plans"></div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap about">
+    <div>
+      <h2>About</h2>
+      <div id="aboutText"></div>
+    </div>
+    <div class="stats" id="stats"></div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <h2 id="ctaTitle"></h2>
+    <p id="ctaSub"></p>
+    <div class="btns" id="ctaBtns"></div>
+  </div>
+</section>
+
+<footer id="foot"></footer>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Video player">
+  <button class="x" id="lbx" aria-label="Close video">&times;</button>
+  <div class="frame" id="frame"></div>
+  <div class="cap" id="cap"></div>
+</div>
+
+<script>
+/* ============================================================
+   EDIT THIS BLOCK ONLY. Each new client = new data here.
+   youtube: paste the video ID (the part after v= in the link).
+   preview (optional): path to a short muted .mp4 for hover.
+   thumb (optional): custom image path. Otherwise YouTube's is used.
+   ============================================================ */
+const SITE = {
+  name: "Kai Adeyemi",
+  role: "Video editor",
+  heroTitle: "Edits that hold attention.",
+  heroSub: "I cut short-form, YouTube, and brand videos for creators who want people to watch to the end.",
+  showreel: "cV2YuJSRNfc",
+  categories: ["All", "Short-form", "YouTube", "Commercial"],
+  projects: [
+    { title: "Nothing Phone 1 review", type: "YouTube", youtube: "cV2YuJSRNfc", note: "Reel, 45s" },
+    { title: "KDP Tutorial", type: "Commercial", youtube: "HrLRvmFRPMo", note: "Brand film, 2m" },
+    { title: "Phone review", type: "YouTube", youtube: "xVHNmcfDcS4", note: "Long-form, 12m" },
+    
+  ],
+  plans: [
+    { name: "Short-form", price: "₦25,000", per: "per video", items: ["Up to 60 seconds", "Captions and sound design", "2 revisions", "48-hour delivery"] },
+    { name: "YouTube", price: "₦90,000", per: "per video", items: ["Up to 15 minutes", "Color, audio, and motion titles", "Thumbnail included", "3 revisions"], hot: true },
+    { name: "Monthly", price: "₦280,000", per: "per month", items: ["12 short-form videos", "1 long-form video", "Priority turnaround", "Weekly check-in"] }
+  ],
+  about: [
+    "I’ve been editing for five years. I started cutting wedding films, then moved into creator content and brand work.",
+    "I care about pacing. Every cut has a reason, and the first three seconds get the most attention."
+  ],
+  stats: [["5 yrs", "Editing"], ["300+", "Videos delivered"], ["24h", "Average first draft"]],
+  cta: { title: "Let’s cut something.", sub: "Send me your footage and a deadline. I’ll reply within a few hours." },
+  contact: { whatsapp: "2349125882627", email: "danieldami9999@gmail.com", instagram: "https://instagram.com/yourhandle" }
+};
+/* ============================================================ */
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const C = SITE.contact;
+
+document.title = SITE.name + " | " + SITE.role;
+$("navName").textContent = SITE.name;
+$("heroTitle").textContent = SITE.heroTitle;
+$("heroSub").textContent = SITE.heroSub;
+$("ctaTitle").textContent = SITE.cta.title;
+$("ctaSub").textContent = SITE.cta.sub;
+$("aboutText").innerHTML = SITE.about.map(p => `<p>${esc(p)}</p>`).join("");
+$("stats").innerHTML = SITE.stats.map(s => `<div><b>${esc(s[0])}</b><span>${esc(s[1])}</span></div>`).join("");
+$("ctaBtns").innerHTML =
+  `<a class="btn main" href="https://wa.me/${esc(C.whatsapp)}">Message on WhatsApp</a>` +
+  `<a class="btn" href="mailto:${esc(C.email)}">Email</a>` +
+  `<a class="btn" href="${esc(C.instagram)}">Instagram</a>`;
+$("foot").textContent = "© " + new Date().getFullYear() + " " + SITE.name;
+
+$("plans").innerHTML = SITE.plans.map(p => `
+  <div class="plan${p.hot ? " hot" : ""}">
+    <h3>${esc(p.name)}</h3>
+    <div class="price">${esc(p.price)}</div>
+    <div style="color:var(--mute);font-size:14px;margin-top:-10px;margin-bottom:14px">${esc(p.per)}</div>
+    <ul>${p.items.map(i => `<li>${esc(i)}</li>`).join("")}</ul>
+  </div>`).join("");
+
+/* grid + filters */
+function renderGrid(cat) {
+  const list = SITE.projects.filter(p => cat === "All" || p.type === cat);
+  $("grid").innerHTML = list.map((p, i) => {
+    const thumb = p.thumb || `https://img.youtube.com/vi/${encodeURIComponent(p.youtube)}/hqdefault.jpg`;
+    return `<button class="card" data-id="${esc(p.youtube)}" data-title="${esc(p.title)}">
+      <div class="thumb">
+        <img src="${esc(thumb)}" alt="" loading="lazy" onerror="this.remove()">
+        ${p.preview ? `<video src="${esc(p.preview)}" muted loop playsinline preload="none"></video>` : ""}
+        <div class="play"></div>
+      </div>
+      <h3>${esc(p.title)}</h3><span>${esc(p.type)} &middot; ${esc(p.note || "")}</span>
+    </button>`;
+  }).join("");
+  $("grid").querySelectorAll(".card").forEach(c => {
+    c.onclick = () => openLb(c.dataset.id, c.dataset.title);
+    const v = c.querySelector("video");
+    if (v) { c.onmouseenter = () => v.play().catch(() => {}); c.onmouseleave = () => { v.pause(); v.currentTime = 0; }; }
+  });
+}
+$("filters").innerHTML = SITE.categories.map((c, i) => `<button class="${i ? "" : "on"}">${esc(c)}</button>`).join("");
+$("filters").onclick = e => {
+  if (e.target.tagName !== "BUTTON") return;
+  $("filters").querySelectorAll("button").forEach(b => b.classList.remove("on"));
+  e.target.classList.add("on");
+  renderGrid(e.target.textContent);
+};
+renderGrid("All");
+
+/* lightbox */
+let lastFocus;
+function openLb(id, title) {
+  lastFocus = document.activeElement;
+  $("frame").innerHTML = `<iframe src="https://www.youtube.com/embed/${encodeURIComponent(id)}?autoplay=1&rel=0&playsinline=1&origin=${encodeURIComponent(location.origin)}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin" title="${esc(title)}"></iframe>`;
+  $("cap").innerHTML = esc(title) + ' &middot; <a href="https://www.youtube.com/watch?v=' + encodeURIComponent(id) + '" target="_blank" rel="noopener" style="color:var(--accent)">Watch on YouTube</a>';
+  $("lb").classList.add("open");
+  $("lbx").focus();
+}
+function closeLb() {
+  $("lb").classList.remove("open");
+  $("frame").innerHTML = "";
+  if (lastFocus) lastFocus.focus();
+}
+$("lbx").onclick = closeLb;
+$("lb").onclick = e => { if (e.target === $("lb")) closeLb(); };
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeLb(); });
+$("reelBtn").onclick = () => openLb(SITE.showreel, "Showreel");
+
+/* timecode, runs once on load then keeps counting */
+(function () {
+  const t0 = performance.now();
+  const p = n => String(n).padStart(2, "0");
+  (function tick() {
+    const ms = performance.now() - t0;
+    const f = Math.floor(ms / (1000 / 24)) % 24, s = Math.floor(ms / 1000) % 60, m = Math.floor(ms / 60000) % 60;
+    $("tc").textContent = "00:" + p(m) + ":" + p(s) + ":" + p(f);
+    requestAnimationFrame(tick);
+  })();
+})();
+</script>
+</body>
+</html>
